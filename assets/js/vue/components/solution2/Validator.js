@@ -77,7 +77,7 @@ export class Validator {
 
     validateIsValidPhoneNumber(phone, index) {
         if (!this.isNumber(phone)) {
-            this.errors2[index]['phones.' + index].push('FE VALIDATION: Name is invalid. Should contains only numbers.')
+            this.errors2[index]['phones.' + index].push('FE VALIDATION: Phone Number is invalid. Should contains only numbers.')
         }
     }
 
