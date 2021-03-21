@@ -2,46 +2,39 @@
 
 namespace app\Services\Validation;
 
-class ContactsValidation {
+class ContactsValidation extends Validator {
 
   const NAMES = 'names';
   const PHONES = 'phones';
   const EMAILS = 'emails';
 
-  protected $validator;
-  public function __construct(Validator $validator)
+  protected function validate($data, $field, $rules = [])
   {
-    $this->validator = $validator;
-  }
-
-  // could be opptimised with polymorphism
-  protected function validate($data, $field, $rules = [], $errorMsg = '')
-  {
-    $defaultRule[] = 'required';
-    if ($rules) {
-      $rules = array_merge($defaultRule, $rules);
-    }
     foreach ($data as $form => $val) {
       
-      $this->validator
+      $this
         ->name(sprintf('%s.%s', $field, $form))
         ->value($val);
-        foreach ($rules as $arg) {
+        foreach (array_merge(['required'], $rules) as $arg) {
           
           $rule = explode('|', $arg);
           $params = [];
+          
           if (count($rule) > 1) {
-            $params[] = $rule[1];
-            $params[] = $errorMsg;
+            array_push($params, $rule[1]);
           }
-          call_user_func_array(array($this->validator, $rule[0]), $params);
+          call_user_func_array(array('parent', $rule[0]), $params);
         }
     }
   }
 
   
   public function names($names) {
-    $this->validate($names, self::NAMES, ['pattern|' . Regex::NAME_REGEX]);
+    $this->validate(
+      $names, 
+      self::NAMES, 
+      ['pattern|' . Regex::NAME_REGEX],
+    );
     return $this;
   }
 
@@ -50,7 +43,6 @@ class ContactsValidation {
       $phones, 
       self::PHONES, 
       ['pattern|' . Regex::PHONE_NUMBER_REGEX],
-      'is invalid phone number.'
     );
     return $this;
 
@@ -61,7 +53,6 @@ class ContactsValidation {
       $emails, 
       self::EMAILS, 
       ['pattern|' . Regex::EMAIL_PATTERN_REGEX],
-      'is invalid email.'
     );
     return $this;
   }

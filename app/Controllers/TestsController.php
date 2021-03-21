@@ -47,15 +47,16 @@ class TestsController extends Controller
       $phones = $this->getRequest()->get(ContactsValidation::PHONES, []);
       $formsSubmitted = $this->getRequest()->get('forms_submitted', 0);
 
-      $contactsValidation = new ContactsValidation(new Validator());
-      $contactsValidation
+      $contactsValidation = new ContactsValidation();
+      $isValid = $contactsValidation
         ->names($names)
         ->emails($emails)
-        ->phones($phones);
+        ->phones($phones)
+        ->passed();
 
-      if (!$contactsValidation->validator()->passed()) {
+      if (!$isValid) {
         $response = new JsonResponse(
-          ['errors' => $contactsValidation->validator()->errors()], 
+          ['errors' => $contactsValidation->errors()], 
           Response::HTTP_UNPROCESSABLE_ENTITY,
         );
 

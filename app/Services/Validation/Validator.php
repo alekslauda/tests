@@ -7,7 +7,7 @@ class Validator {
 
   private $errors = [];
 
-  public function pattern($type, $msg)
+  public function pattern($type)
   {
     $regexPatterns = Regex::$patterns;
     if (!array_key_exists($type, $regexPatterns)) {
@@ -15,7 +15,7 @@ class Validator {
     }
 
     if (!preg_match($regexPatterns[$type], $this->value)) {
-      $this->errors[$this->name][] = 'BE VALIDATION: ' . $this->name . ' ' . $msg;
+      $this->errors[$this->name][] = 'BE VALIDATION: ' . $this->name . ' is invalid.';
     }
     return $this;
   }
@@ -33,6 +33,7 @@ class Validator {
     $this->value = $value;
     return $this;
   }
+
 
   public function name($name)
   {
