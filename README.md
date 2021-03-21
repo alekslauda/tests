@@ -38,7 +38,7 @@ tests
 * if one wants to use an external file, use the command as follows: ```php index.php --path="C:\Program Files\ExternalFile.txt"``` or ```php index.php --path="/Users/mojojojo/external_file.txt"```
 * One should see an success message showing how many entries were inserted
 * now, we have to start a server an see our solutions in action
-* run ```php -S localhost:8000``` (NOTE THAT AN EXCEPTION WILL BE THROWN IF SERVER IS NOT THAT)
+* run ```php -S localhost:8000``` (NOTE THAT AN EXCEPTION WILL BE THROWN IF SERVER IS NOT THE GIVEN ONE(```loclahost:8000```))
 * project web address should be: ```localhost:8000```
 * after server is served, 
 * one should open the browser and navigate to: ```http://localhost:8000``` and be placed on the home screen web page and can play arround with the solutions
