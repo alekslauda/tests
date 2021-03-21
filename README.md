@@ -30,7 +30,7 @@ tests
 
 ```
 
-## PLAY ARROUND (Tests Solution 1)
+## PLAY AROUND (Tests Solution 1)
 
 * As mentioned above within the dir ```/test-files``` an example tree representation file exists, but one could use a external file as long as file exists.
 * To use an external file, one should specify the path of the file, if not , the default one will be used
@@ -43,7 +43,7 @@ tests
 * after server is served, 
 * one should open the browser and navigate to: ```http://localhost:8000``` and be placed on the home screen web page and can play arround with the solutions
 
-## PLAY ARROUND (Tests Solution 2)
+## PLAY AROUND (Tests Solution 2)
 
 * to start with Solution 2, one just have to serve the web server within the ```tests``` (project dir)
 * one should open the browser and navigate to: ```http://localhost:8000```
