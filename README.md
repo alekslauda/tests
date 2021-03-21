@@ -14,6 +14,13 @@ Open your terminal and type in
 $ git clone git@github.com:alekslauda/tests.git
 $ cd tests
 $ composer install
+## IF NO COMPOSER
+## RUN THE FOLLOWING
+####################################
+$ cd ~/
+$ wget https://getcomposer.org/composer.phar
+$ php composer.phar [command]
+####################################
 $ composer dump-autoload
 ```
 
