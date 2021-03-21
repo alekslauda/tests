@@ -3,7 +3,6 @@
 
 <head profile="http://www.w3.org/2005/10/profile">
   <meta charset="utf-8">
-  <link rel="icon" type="image/png" href="http://example.com/myicon.png">
   <link href="<?= ASSETS_ROOT ?>/css/bootstrap.min.css" rel="stylesheet">
   <link href="<?= ASSETS_ROOT ?>/css/app.css" rel="stylesheet">
   <script src="<?= ASSETS_ROOT ?>/js/vue/vue.js"></script>
