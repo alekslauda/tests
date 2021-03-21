@@ -27,7 +27,7 @@ class PageNotFoundController extends Controller
       $$varName = $value;
     }
     
-    $this->view->template = '/404/index';
+    $this->view->template = DIRECTORY_SEPARATOR . '404/index';
 
     ob_start();
 

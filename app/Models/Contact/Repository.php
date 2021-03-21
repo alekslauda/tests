@@ -4,7 +4,7 @@ namespace app\Models\Contact;
 
 class Repository {
 
-  const CONTACTS_STORAGE_FILE = TESTS_FILES . '/contacts.txt';
+  const CONTACTS_STORAGE_FILE = TESTS_FILES . DIRECTORY_SEPARATOR . 'contacts.txt';
 
   protected $factory;
 

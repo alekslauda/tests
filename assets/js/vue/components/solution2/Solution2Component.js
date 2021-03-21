@@ -119,7 +119,6 @@ export default {
     mounted() {
         this.contactForms.push(new Contact());
         this.contactsList = JSON.parse(this.contacts);
-        console.log("contacts", this.contactsList);
         this.validator = new Validator(this.contactForms);
     },
 

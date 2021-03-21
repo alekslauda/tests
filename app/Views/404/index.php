@@ -3,6 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12 text-center">
                 <span class="display-1 d-block">404</span>
+                <div class="mb-4 lead"><?= $this->view->pageNotFoundPath ?></div>
                 <div class="mb-4 lead"><?= $this->view->message ?></div>
                 <a href="<?= HOME ?>" class="btn btn-link">Back to Home</a>
             </div>

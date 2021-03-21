@@ -2,86 +2,11 @@
 
 namespace app\Services\Commands;
 
+use app\Models\FileStructure\Service;
 use app\Services\Core\OptionsStrategyInterface;
-
-interface NodeBuilderInterface {
-
-}
-
-class Node  {
-  protected $title;
-  protected $parent;
-  protected $child;
-
-  public function __construct($title)
-  {
-    $this->title = $title;
-    $this->parent = null;
-    $this->children = [];
-  }
-
-  public function add($child)
-  {
-    $this->children[] = $child;
-    $child->parent = $this;
-  }
-
-  public function getParent()
-  {
-    return $this->parent;
-  }
-
-  public function getChildren()
-  {
-    return $this->children;
-  }
-
-  public function getTitle()
-  {
-    return $this->title;
-  }
-}
-
-class NodeBuilder implements NodeBuilderInterface {
-  
-  public function __construct(Node $node, $depth = 0)
-  {
-    $this->node = $node;
-    $this->depth = $depth;
-  }
-
-  public function __invoke($title, $depth)
-  {
-    $newNode = new Node($title);
-
-    if ($depth > $this->depth) {
-      $this->node->add($newNode);
-      $this->depth = $depth;
-    } else if ($depth === $this->depth) {
-      $this->node->getParent()->add($newNode);
-    } else {
-      $parent = $this->node->getParent();
-
-      foreach (range(1, $this->depth - $depth) as $x) {
-        $parent = $parent->getParent();
-      }
-      $parent->add($newNode);
-      $this->depth = $depth;
-    }
-
-    $this->node = $newNode;
-  }
-
-  public function setTree(Node $tree)
-  {
-    $this->node = $tree;
-  }
-
-  public function getTree()
-  {
-    return $this->node;
-  }
-}
+use app\Services\Core\ServiceLocator;
+use app\Services\TreeBuilder\Node;
+use app\Services\TreeBuilder\NodeBuilder;
 
 class TreeParserCommand implements OptionsStrategyInterface
 {
@@ -120,18 +45,17 @@ class TreeParserCommand implements OptionsStrategyInterface
       $builder(trim($content), $tabs);
     }
     $builder->setTree($tree);
-    
-    dd($this->prepareForInsert($builder->getTree()));
+
+    $this->treeBuilder = $builder;
   }
 
-  public function prepareForInsert(Node $tree, &$paths =[], $path = '')
+  public function run()
   {
-    $path .= DIRECTORY_SEPARATOR . $tree->getTitle();
-    foreach ($tree->getChildren() as $child) {
-      $paths[] = $path . DIRECTORY_SEPARATOR . $child->getTitle();
-      $this->prepareForInsert($child, $paths, $path);
-    }
-    return $paths;
+    $service = ServiceLocator::getInstance()->getService(Service::__ID__);
+    $dbData = $service->parseTree($this->treeBuilder->getTree());
+    $inserted = $service->getRepository()->bulkInsert($dbData);
+
+    echo sprintf('SUCCESSFULLY INSERTED: %s TREE NODES', $inserted);
   }
 
   protected function getFilepath()
@@ -154,10 +78,5 @@ class TreeParserCommand implements OptionsStrategyInterface
     }
 
     return $filepath;
-  }
-
-  public function run()
-  {
-    dd('here');
   }
 }

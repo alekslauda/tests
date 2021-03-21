@@ -53,16 +53,18 @@ class Router implements OptionsStrategyInterface {
 
     $controllerClassName = self::CONTROLLERS_NAMESPACE . $controllerName . 'Controller';
     
-    if (!method_exists($controllerClassName, $methodName)) {
-      // throw new NotFound('Page not found');
-      $c = new PageNotFoundController($registry, $this->request, $this->response);
-      $c->index();
-      
-    } else {
-
+    try {
+      if (!method_exists($controllerClassName, $methodName)) {
+        throw new NotFound($this->request->getPathInfo());
+      }
       $controller = new $controllerClassName($registry, $this->request, $this->response);
       $controller->$methodName();
+    } catch (NotFound $ex) {
+      $registry->pageNotFoundPath = $this->request->getPathInfo();
+      $c = new PageNotFoundController($registry, $this->request, $this->response);
+      $c->index();
     }
+    
 
 
     $this->response->send();

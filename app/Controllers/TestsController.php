@@ -3,6 +3,7 @@
 namespace app\Controllers;
 
 use app\Models\Contact\Service;
+use app\Models\FileStructure\Service as FileStructureService;
 use app\Services\Core\ServiceLocator;
 use app\Services\Validation\ContactsValidation;
 use app\Services\Validation\Validator;
@@ -16,7 +17,12 @@ class TestsController extends Controller
 
   public function solution1()
   {
-    $this->view->title = 'Solution 1';
+    $term = $this->getRequest()->get('term', null);
+    $data = [];
+    if ($term) {
+      $data = $this->fileStructureService->fetchAllForTerm($term);
+    }
+    $this->view->data = $data;
     $this->render();
   }
 
@@ -101,6 +107,7 @@ class TestsController extends Controller
   protected function init()
   {
     $this->service = ServiceLocator::getInstance()->getService(Service::__ID__);
+    $this->fileStructureService = ServiceLocator::getInstance()->getService(FileStructureService::__ID__);
   }
 
   protected function completeRequest($message)

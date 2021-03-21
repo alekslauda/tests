@@ -4,7 +4,6 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 use app\Services\Core\OptionsStrategy;
-use app\Services\Routing\Exceptions\NotFound;
 
 define('PROJECT_ROOT', __DIR__);
 
@@ -19,8 +18,6 @@ try {
 
   $optionsStrategy = new OptionsStrategy(php_sapi_name());
   $optionsStrategy->dispatch();
-} catch (NotFound $invalidRouteException) {
-  dd($invalidRouteException->getMessage());
 } catch (\Exception $ex) {
   dd($ex->getMessage());
 }
