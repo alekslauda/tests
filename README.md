@@ -16,6 +16,7 @@ $ cd tests
 
 ## IF NO COMPOSER
 ## RUN THE FOLLOWING
+## INSTALL `WGET`
 ####################################
 $ cd ~/
 $ wget https://getcomposer.org/composer.phar
