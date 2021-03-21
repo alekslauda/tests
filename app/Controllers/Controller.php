@@ -28,7 +28,11 @@ abstract class Controller
     $this->response = $response;
     $this->session = new Session();
     $this->session->start();
+
+    $this->init();
   }
+
+  abstract protected function init();
 
   public function render()
   {

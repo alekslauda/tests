@@ -19,6 +19,11 @@ class OptionsStrategy {
 
     $this->option = $this->applyStrategy($type);
   }
+  
+  public function dispatch()
+  {
+    $this->option->run();
+  }
 
   protected function applyStrategy($type) {
     $strategies = [
@@ -31,10 +36,5 @@ class OptionsStrategy {
     ];
 
     return $strategies[$type]();
-  }
-
-  public function dispatch()
-  {
-    $this->option->run();
   }
 }

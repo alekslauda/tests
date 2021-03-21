@@ -86,7 +86,7 @@ class NodeBuilder implements NodeBuilderInterface {
 class TreeParserCommand implements OptionsStrategyInterface
 {
 
-  const TREE_STRUCTURE_FILE = TESTS_FILES . DIRECTORY_SEPARATOR . 'tree.txt';
+  const TREE_STRUCTURE_FILE = TESTS_FILES . DIRECTORY_SEPARATOR . 'file_structure.txt';
 
   public function __construct()
   {

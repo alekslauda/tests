@@ -14,31 +14,55 @@ class ContactsValidation {
     $this->validator = $validator;
   }
 
-  protected function validate($data, $field)
+  // could be opptimised with polymorphism
+  protected function validate($data, $field, $rules = [], $errorMsg = '')
   {
+    $defaultRule[] = 'required';
+    if ($rules) {
+      $rules = array_merge($defaultRule, $rules);
+    }
     foreach ($data as $form => $val) {
       
       $this->validator
         ->name(sprintf('%s.%s', $field, $form))
-        ->value($val)
-        ->required()
-        ->pattern(Regex::NAME_REGEX);
+        ->value($val);
+        foreach ($rules as $arg) {
+          
+          $rule = explode('|', $arg);
+          $params = [];
+          if (count($rule) > 1) {
+            $params[] = $rule[1];
+            $params[] = $errorMsg;
+          }
+          call_user_func_array(array($this->validator, $rule[0]), $params);
+        }
     }
   }
 
+  
   public function names($names) {
-    $this->validate($names, self::NAMES);
+    $this->validate($names, self::NAMES, ['pattern|' . Regex::NAME_REGEX]);
     return $this;
   }
 
   public function phones($phones) {
-    $this->validate($phones, self::PHONES);
+    $this->validate(
+      $phones, 
+      self::PHONES, 
+      ['pattern|' . Regex::PHONE_NUMBER_REGEX],
+      'is invalid phone number.'
+    );
     return $this;
 
   }
 
   public function emails($emails) {
-    $this->validate($emails, self::EMAILS);
+    $this->validate(
+      $emails, 
+      self::EMAILS, 
+      ['pattern|' . Regex::EMAIL_PATTERN_REGEX],
+      'is invalid email.'
+    );
     return $this;
   }
 

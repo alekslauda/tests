@@ -1,1 +1,1 @@
-<solution2 bg-color="red"></solution2>
+<solution2 contacts="<?= htmlentities(json_encode($this->view->contacts)) ?>"></solution2>

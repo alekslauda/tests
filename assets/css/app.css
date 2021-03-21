@@ -1,11 +1,8 @@
 .solutions {
-    /* background-color: #dde1f3; */
     margin-top: 50px;
-    /* position: absolute;
-    left: 50%;
-    top: 50%;
-    height: 200px;
-    margin-top: -100;
-    width: 400px;
-    margin-left: -200px; */
+}
+
+.flashbag-message {
+    text-align: center;
+    margin-top: 20px;
 }

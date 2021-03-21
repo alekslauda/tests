@@ -5,21 +5,22 @@ ini_set('display_errors', 1);
 
 use app\Services\Core\OptionsStrategy;
 use app\Services\Routing\Exceptions\NotFound;
-use app\Services\Routing\Router;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 
-require __DIR__."/defines.php";
+define('PROJECT_ROOT', __DIR__);
 
-require __DIR__."/vendor/autoload.php";
+require PROJECT_ROOT . "/defines.php";
 
-// dd(getopt(':S'));
+require PROJECT_ROOT . "/vendor/autoload.php";
+
+
 try {
+  
+  require PROJECT_ROOT . "/services.php";
+
   $optionsStrategy = new OptionsStrategy(php_sapi_name());
   $optionsStrategy->dispatch();
 } catch (NotFound $invalidRouteException) {
   dd($invalidRouteException->getMessage());
-  // $response = new RedirectResponse(PROJECT_URL)
 } catch (\Exception $ex) {
-  // $response->setContent($ex->getMessage());
   dd($ex->getMessage());
 }

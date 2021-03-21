@@ -7,6 +7,7 @@
   <link href="<?= ASSETS_ROOT ?>/css/bootstrap.min.css" rel="stylesheet">
   <link href="<?= ASSETS_ROOT ?>/css/app.css" rel="stylesheet">
   <script src="<?= ASSETS_ROOT ?>/js/vue/vue.js"></script>
+  <script src="<?= ASSETS_ROOT ?>/js/axios/axios.js"></script>
   <script src="<?= ASSETS_ROOT ?>/js/app.js" type="module"></script>
 </head>
 
@@ -28,9 +29,16 @@
     </div>
   </nav>
   <main>
+    <?php
+      if ($this->getSession()->getFlashBag()->has('success')) {
+        ?> <div class="alert alert-success flashbag-message"> <?php
+          foreach($this->getSession()->getFlashBag()->get('success') as $msg) {
+            echo $msg;
+          }?> </div><?php
+      }
+    ?>
     <div class="container">
       <?php echo $this->renderTemplate($this->view->template); ?>
-      <hr>
       <footer>
 
       </footer>

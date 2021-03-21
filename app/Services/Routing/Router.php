@@ -2,6 +2,7 @@
 
 namespace app\Services\Routing;
 
+use app\Controllers\PageNotFoundController;
 use app\Services\Core\OptionsStrategyInterface;
 use app\Services\Routing\Exceptions\NotFound;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,11 +54,16 @@ class Router implements OptionsStrategyInterface {
     $controllerClassName = self::CONTROLLERS_NAMESPACE . $controllerName . 'Controller';
     
     if (!method_exists($controllerClassName, $methodName)) {
-      throw new NotFound('Page not found');
+      // throw new NotFound('Page not found');
+      $c = new PageNotFoundController($registry, $this->request, $this->response);
+      $c->index();
+      
+    } else {
+
+      $controller = new $controllerClassName($registry, $this->request, $this->response);
+      $controller->$methodName();
     }
 
-    $controller = new $controllerClassName($registry, $this->request, $this->response);
-    $controller->$methodName();
 
     $this->response->send();
     exit();

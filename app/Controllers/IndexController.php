@@ -10,4 +10,9 @@ class IndexController extends Controller
     $this->view->title = 'Hello, check my solutions';
     $this->render();
   }
+
+  protected function init()
+  {
+    //
+  }
 }
