@@ -79,32 +79,6 @@ class TestsController extends Controller
     $this->render();
   }
 
-  // public function test1()
-  // {
-  //   $contacts = [
-  //     [
-  //       'id' => uniqid(), 
-  //     'name' => 'Sasho',
-  //     'email' => 'Realert@abv.bg',
-  //     'phone' => '123213' 
-  //     ],
-  //     [
-  //       'id' => uniqid(), 
-  //     'name' => 'Sasho 1',
-  //     'email' => 'Realert1@abv.bg',
-  //     'phone' => '1232133' 
-  //     ]
-  //   ];
-  //   file_put_contents(TESTS_FILES . DIRECTORY_SEPARATOR . 'contacts.txt',  '<?php return ' . var_export($contacts, true) . ';');
-  //   dd('success');
-  // }
-
-  // public function test2()
-  // {
-  //   $contacts = include TESTS_FILES . DIRECTORY_SEPARATOR . 'contacts.txt';
-  //   dd($contacts[1]);
-  // }
-
   protected function init()
   {
     $this->service = ServiceLocator::getInstance()->getService(Service::__ID__);

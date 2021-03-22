@@ -1,83 +1,58 @@
 export class Validator {
 
     constructor(values) {
-        this.constraints = {
-            name: {
-                required: true,
-                isValidName: (str) => {
-                    var pattern = /^[a-zA-Z\s]*$/;
-                    return pattern.test(str);
-                },
-            },
-            email: {
-                required: true,
-                email: (txt) => {
-                    var re = /\S+@\S+\.\S+/;
-                    return re.test(txt);
-                }
-            },
-            phone: {
-                required: true,
-                isNumber: (str) => {
-                    var pattern = /^\d+$/;
-                    return pattern.test(str);
-                },
-            }
-
-        }
         this.isValidName = (str) => {
                 var pattern = /^[a-zA-Z\s]*$/;
                 return pattern.test(str);
             },
+
             this.isEmail = (txt) => {
                 var re = /\S+@\S+\.\S+/;
                 return re.test(txt);
             }
+
         this.isNumber = (str) => {
                 var pattern = /^\d+$/;
                 return pattern.test(str);
             },
 
             this.values = values;
-        this.errors = {
-
-        };
-        this.errors2 = [];
+        this.errors = [];
     }
 
     validateRequired(contact, index) {
-        this.errors2[index] = {}
-        this.errors2[index]['names.' + index] = [];
-        this.errors2[index]['emails.' + index] = [];
-        this.errors2[index]['phones.' + index] = [];
+        this.errors[index] = {}
+        this.errors[index]['names.' + index] = [];
+        this.errors[index]['emails.' + index] = [];
+        this.errors[index]['phones.' + index] = [];
         if (!contact.name) {
-            this.errors2[index]['names.' + index].push('FE VALIDATION: Name is required.');
+            this.errors[index]['names.' + index].push('FE VALIDATION: Name is required.');
         }
 
         if (!contact.email) {
-            this.errors2[index]['emails.' + index].push('FE VALIDATION: Email is required.');
+            this.errors[index]['emails.' + index].push('FE VALIDATION: Email is required.');
         }
 
         if (!contact.phone) {
-            this.errors2[index]['phones.' + index].push('FE VALIDATION: Phone Number is required.');
+            this.errors[index]['phones.' + index].push('FE VALIDATION: Phone Number is required.');
         }
     }
 
     validateIsValidName(name, index) {
         if (!this.isValidName(name)) {
-            this.errors2[index]['names.' + index].push('FE VALIDATION: Name is invalid. Should contains only letters and spaces.')
+            this.errors[index]['names.' + index].push('FE VALIDATION: Name is invalid. Should contains only letters and spaces.')
         }
     }
 
     validateIsValidEmail(email, index) {
         if (!this.isEmail(email)) {
-            this.errors2[index]['emails.' + index].push('FE VALIDATION: Email is invalid.')
+            this.errors[index]['emails.' + index].push('FE VALIDATION: Email is invalid.')
         }
     }
 
     validateIsValidPhoneNumber(phone, index) {
         if (!this.isNumber(phone)) {
-            this.errors2[index]['phones.' + index].push('FE VALIDATION: Phone Number is invalid. Should contains only numbers.')
+            this.errors[index]['phones.' + index].push('FE VALIDATION: Phone Number is invalid. Should contains only numbers.')
         }
     }
 
@@ -94,11 +69,11 @@ export class Validator {
     }
 
     isValid() {
-        return !Object.keys(this.errors2).length
+        return !Object.keys(this.errors).length
     }
 
     getErrors() {
-        return this.errors2;
+        return this.errors;
     }
 
     getMatchingBEerrors() {
@@ -112,7 +87,6 @@ export class Validator {
                 ['phones.' + index]: newObj[2] ? newObj[2] : [],
             }
         })
-        console.log("reorder", reOrder);
         return reOrder;
     }
 
